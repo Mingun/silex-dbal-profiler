@@ -83,9 +83,11 @@
                         <td class="nowrap">{{ '%0.2f'|format(query.executionMS * 1000) }} ms</td>
                         <td>
                             <pre class="highlight highlight_sql">{{ query.sql }}</pre>
-                            <div>
-                                <strong class="font-normal text-small">Parameters</strong>: {{ query.params|json_encode() }}
-                            </div>
+                            {% if query.params is not empty %}
+                            <span class="metadata">
+                                {{ profiler_dump(query.params, maxDepth=1) }}
+                            </span>
+                            {% endif %}
                         </td>
                     </tr>
                     {% endfor %}
